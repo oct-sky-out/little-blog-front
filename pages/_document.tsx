@@ -1,13 +1,13 @@
 import React from 'react';
-import Document, { Html, Head, Main, NextScript } from 'next/document';
+import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@mui/styles';
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html>
+        <Head></Head>
         <body>
-          <Head></Head>
           <Main />
           <NextScript />
         </body>
@@ -22,7 +22,7 @@ MyDocument.getInitialProps = async (ctx) => {
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App) => (props) =>
+      enhanceApp: (App) => (props: any) =>
         materialSheets.collect(<App {...props} />),
     });
 
