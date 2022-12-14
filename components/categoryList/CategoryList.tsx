@@ -1,13 +1,42 @@
-import React from 'react';
+import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import {
+  Collapse,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from '@mui/material';
+import React, { useCallback, useMemo, useState } from 'react';
+import { v4 } from 'uuid';
 import { useIsAdminSWR } from '../hook/useIsAdminSWR';
+import CategoryChild from './CategoryChild';
+
+export type childCategoryType = {
+  child?: childCategoryType[];
+  href: string;
+  name: string;
+  updateHref: string;
+  deleteHref: string;
+};
 
 interface CategoryListProps {
-  children: React.ReactNode;
-  deps: number;
+  childCateogries?: childCategoryType[];
+  deps?: number;
+  href: string;
+  name: string;
+  updateHref: string;
+  deleteHref: string;
 }
 
-const CategoryList = ({ children, deps }: CategoryListProps) => {
-  const applyIndent = `pl-[${deps * 12}px]`;
+const CategoryList = ({
+  childCateogries,
+  deps = 0,
+  href,
+  name,
+}: CategoryListProps) => {
+  const [childCategoryOpen, setChildCategoryOpen] = useState(false);
+  const menuOpenClose = (state: boolean) => setChildCategoryOpen(state);
+
+  //! 추후 리팩터링 필요 중복성이 매우 높음
   const { data } = useIsAdminSWR();
   const renderIsLoggedAdmin = () => {
     if (data?.authenticationLevel === 'ADMIN') {
@@ -20,12 +49,66 @@ const CategoryList = ({ children, deps }: CategoryListProps) => {
     }
   };
 
+  const hasChildren = () => {
+    if (childCateogries) {
+      return childCategoryOpen ? <ExpandLess /> : <ExpandMore />;
+    }
+  };
+
+  const childRender = useMemo(() => {
+    if (!childCateogries) {
+      return '';
+    }
+
+    return (
+      <Collapse in={childCategoryOpen} timeout="auto" unmountOnExit>
+        {childCateogries.map((category) => {
+          const { child, href, name, updateHref, deleteHref } = category;
+          if (!child) {
+            return (
+              <CategoryChild
+                deps={deps! + 1}
+                href={href}
+                childName={name}
+                key={v4()}
+                updateHref={updateHref}
+                deleteHref={deleteHref}
+              />
+            );
+          }
+
+          if (child) {
+            return (
+              <CategoryList
+                key={v4()}
+                childCateogries={child}
+                href={href}
+                deps={deps! + 1}
+                name={name}
+                updateHref={updateHref}
+                deleteHref={deleteHref}
+              ></CategoryList>
+            );
+          }
+        })}
+      </Collapse>
+    );
+  }, [childCateogries, childCategoryOpen]);
+
   return (
     <React.Fragment>
-      <div className={applyIndent}>
-        {children}
-        {renderIsLoggedAdmin()}
-      </div>
+      <ListItem
+        disablePadding
+        onClick={() => menuOpenClose(!childCategoryOpen)}
+        data-testid="category-btn"
+      >
+        <ListItemButton href={href} sx={{ px: deps }}>
+          <ListItemText primary={name} />
+          {hasChildren()}
+        </ListItemButton>
+      </ListItem>
+      {renderIsLoggedAdmin()}
+      {childRender}
     </React.Fragment>
   );
 };

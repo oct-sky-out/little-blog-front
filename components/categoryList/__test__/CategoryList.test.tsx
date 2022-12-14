@@ -1,45 +1,91 @@
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
-import CategoryList from '../CategoryList';
+import CategoryList, { childCategoryType } from '../CategoryList';
 
 describe('카테고리 항목', () => {
   beforeEach(() => {
+    const grandChild: childCategoryType[] = Array(1, 2, 3).map((i) => ({
+      href: 'https://example/' + i,
+      name: 'grand child name is ' + i,
+      deleteHref: '',
+      updateHref: '',
+    }));
+    const child: childCategoryType[] = Array(4, 5, 6).map((i) => ({
+      href: 'https://example/' + i,
+      name: 'child name is ' + i,
+      deleteHref: '',
+      updateHref: '',
+      child: grandChild,
+    }));
+
     render(
       <>
-        <CategoryList deps={0}>
-          example
-          <CategoryList deps={1}>
-            example1
-            <CategoryList deps={2}>example2</CategoryList>
-          </CategoryList>
-        </CategoryList>
+        <CategoryList
+          href=""
+          name="root category"
+          childCateogries={child}
+          deleteHref={''}
+          updateHref={''}
+        />
+        <CategoryList
+          href=""
+          name="root category2"
+          deleteHref={''}
+          updateHref={''}
+        />
       </>
     );
   });
 
   test('카테고리 항목은 렌더링되어야한다. ', async () => {
-    const category = await screen.findByText<HTMLDivElement>('example');
-    expect(category.innerHTML.match('example')).toBeTruthy();
+    const category = await screen.findByText<HTMLSpanElement>('root category');
+    expect(category.innerHTML).toEqual('root category');
   });
 
   test('카테고리 항목은 깊이에 따라 오른쪽으로 들여쓰기가 되어있어야한다. ', async () => {
-    const categoryDeps1 = await screen.findByText<HTMLDivElement>('example1');
-    const categoryDeps2 = await screen.findByText<HTMLDivElement>('example2');
-    expect(categoryDeps1.classList.contains('pl-[12px]')).toEqual(true);
-    expect(categoryDeps2.classList.contains('pl-[24px]')).toEqual(true);
+    const rootCategory = await screen.findByText<HTMLSpanElement>(
+      'root category'
+    );
+    userEvent.click(rootCategory);
+
+    const categoryDeps1 = await screen.findByText<HTMLDivElement>(
+      'child name is 4'
+    );
+    const categoryDeps2 = await screen.findByText<HTMLDivElement>(
+      'child name is 5'
+    );
+
+    expect(categoryDeps1).not.toBeUndefined();
+    expect(categoryDeps2).not.toBeUndefined();
   });
 
   test('카테고리 항목은 자식 elem이 존재할 수 있다', async () => {
-    const category = await screen.findByText<HTMLDivElement>('example');
-    const category1 = await screen.findByText<HTMLDivElement>('example1');
-    const category2 = await screen.findByText<HTMLDivElement>('example2');
+    const rootCategory = await screen.findByText<HTMLSpanElement>(
+      'root category'
+    );
+    userEvent.click(rootCategory);
 
-    expect(category.childNodes[1]).toEqual(category1);
-    expect(category1.childNodes[1]).toEqual(category2);
+    const categoryDeps1 = await screen.findByText<HTMLDivElement>(
+      'child name is 4'
+    );
+    userEvent.click(categoryDeps1);
+
+    const grandChildcategory1 = await screen.findByText<HTMLDivElement>(
+      'grand child name is 1'
+    );
+
+    expect(grandChildcategory1).not.toBeUndefined();
   });
 
-  fail(
-    '카테고리 항목은 운영자의 권한으로 로그인이 되었을 경우, 수정, 삭제가 가능하다. '
-  );
+  test('자식 카테고리가 없으면 하위 카테고리가 열리지 않는다.', async () => {
+    const rootCategory2 = (
+      await screen.findAllByTestId<HTMLElement>('category-btn')
+    )[1];
+
+    userEvent.click(rootCategory2);
+
+    expect(rootCategory2.nextElementSibling).toBeNull();
+  });
 });
