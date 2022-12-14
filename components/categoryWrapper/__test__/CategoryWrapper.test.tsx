@@ -3,7 +3,8 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import Category from '../Category';
+import CategoryWrapper from '@/components/categoryWrapper/CategoryWrapper';
+
 /**
  * expect extend 먹힘
  *
@@ -13,7 +14,9 @@ describe('렌더링', () => {
   test('should be renderd', async () => {
     render(
       <>
-        <Category anchor="top" categories={() => <div>example1</div>} />
+        <CategoryWrapper anchor="top">
+          <div data-testid="category-list">example1</div>
+        </CategoryWrapper>
       </>
     );
 

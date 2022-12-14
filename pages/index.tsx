@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Category from '../components/category/Category';
+import Category from '../components/categoryWrapper/CategoryWrapper';
 
 export default function Home() {
   return (
@@ -11,14 +11,9 @@ export default function Home() {
       </Head>
 
       <main>
-        <Category
-          anchor="top"
-          categories={() => (
-            <>
-              <div className="dark:bg-dark-bg-light">1234</div>
-            </>
-          )}
-        />
+        <Category anchor="top">
+          <div className="dark:bg-dark-bg-light">1234</div>
+        </Category>
       </main>
       <footer>{/* footer components */}</footer>
     </div>

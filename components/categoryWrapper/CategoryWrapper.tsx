@@ -4,13 +4,16 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { Button } from '@mui/material';
 import { useState } from 'react';
 
-type Anchor = 'left' | 'top' | 'right' | 'bottom';
-type propsType = {
-  categories: () => JSX.Element;
+export type Anchor = 'left' | 'top' | 'right' | 'bottom';
+export interface PropsType {
+  children: React.ReactNode;
   anchor: Anchor;
-};
+}
 
-const Category = ({ categories, anchor }: propsType) => {
+const CategoryWrapper: React.FC<PropsType> = ({
+  anchor,
+  children,
+}: PropsType) => {
   const iOS =
     typeof navigator !== 'undefined' &&
     /iPad|iPhone|iPod/.test(navigator.userAgent);
@@ -55,11 +58,10 @@ const Category = ({ categories, anchor }: propsType) => {
         onOpen={toggleCategory(true)}
         data-testid="opened-categories-wrapper"
       >
-        {/* cateogry */}
-        {categories()}
+        {children}
       </SwipeableDrawer>
     </React.Fragment>
   );
 };
 
-export default Category;
+export default CategoryWrapper;
