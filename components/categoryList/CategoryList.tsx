@@ -5,7 +5,7 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { v4 } from 'uuid';
 import { useIsAdminSWR } from '../hook/useIsAdminSWR';
 import CategoryChild from './CategoryChild';

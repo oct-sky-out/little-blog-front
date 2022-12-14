@@ -1,10 +1,4 @@
-import {
-  Collapse,
-  List,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-} from '@mui/material';
+import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import React from 'react';
 import { useIsAdminSWR } from '../hook/useIsAdminSWR';
 
