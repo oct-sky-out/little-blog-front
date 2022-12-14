@@ -1,7 +1,8 @@
 import React from 'react';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import List from '@mui/material/List';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Button } from '@mui/material';
+import { Button, ListSubheader } from '@mui/material';
 import { useState } from 'react';
 
 export type Anchor = 'left' | 'top' | 'right' | 'bottom';
@@ -58,7 +59,17 @@ const CategoryWrapper: React.FC<PropsType> = ({
         onOpen={toggleCategory(true)}
         data-testid="opened-categories-wrapper"
       >
-        {children}
+        <List
+          component="nav"
+          aria-labelledby="nested-list-subheader"
+          subheader={
+            <ListSubheader component="div" id="nested-list-subheader">
+              카테고리
+            </ListSubheader>
+          }
+        >
+          {children}
+        </List>
       </SwipeableDrawer>
     </React.Fragment>
   );
