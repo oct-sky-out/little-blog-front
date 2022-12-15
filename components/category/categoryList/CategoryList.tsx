@@ -104,8 +104,8 @@ const CategoryList = ({
       >
         <ListItemButton href={href} sx={{ px: deps }}>
           <ListItemText primary={name} />
-          {hasChildren()}
         </ListItemButton>
+        {hasChildren()}
       </ListItem>
       {renderIsLoggedAdmin()}
       {childRender}
