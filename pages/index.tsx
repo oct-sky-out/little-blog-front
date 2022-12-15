@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import Category from '../components/categoryWrapper/CategoryWrapper';
+import Category from '../components/category/categoryWrapper/CategoryWrapper';
 
 export default function Home() {
   return (

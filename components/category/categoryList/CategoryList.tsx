@@ -7,8 +7,8 @@ import {
 } from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import { v4 } from 'uuid';
-import { useIsAdminSWR } from '../hook/useIsAdminSWR';
-import CategoryChild from './CategoryChild';
+import { useIsAdminSWR } from '../../hook/useIsAdminSWR';
+import CategoryChild from '../categoryChild/CategoryChild';
 
 export type childCategoryType = {
   child?: childCategoryType[];

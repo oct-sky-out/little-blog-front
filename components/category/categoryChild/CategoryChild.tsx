@@ -1,6 +1,6 @@
 import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import React from 'react';
-import { useIsAdminSWR } from '../hook/useIsAdminSWR';
+import { useIsAdminSWR } from '../../hook/useIsAdminSWR';
 
 interface CategoryChildProps {
   deps: number;

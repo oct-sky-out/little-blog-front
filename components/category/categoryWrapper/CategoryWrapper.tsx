@@ -48,7 +48,7 @@ const CategoryWrapper: React.FC<PropsType> = ({
         onClick={toggleCategory(!categoryToggleState)}
         data-testid="menu-open-btn"
       >
-        <MenuIcon fontSize="large" className="text-fuchsia-700" />
+        <MenuIcon fontSize="medium" className="text-fuchsia-600" />
       </Button>
       <SwipeableDrawer
         disableBackdropTransition={!iOS}
