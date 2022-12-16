@@ -2,17 +2,17 @@ import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import CategoryList, { childCategoryType } from '../CategoryList';
+import CategoryList, { CategoryListProps } from '../CategoryList';
 
 describe('카테고리 항목', () => {
   beforeEach(() => {
-    const grandChild: childCategoryType[] = Array(1, 2, 3).map((i) => ({
+    const grandChild: CategoryListProps[] = Array(1, 2, 3).map((i) => ({
       href: 'https://example/' + i,
       name: 'grand child name is ' + i,
       deleteHref: '',
       updateHref: '',
     }));
-    const child: childCategoryType[] = Array(4, 5, 6).map((i) => ({
+    const child: CategoryListProps[] = Array(4, 5, 6).map((i) => ({
       href: 'https://example/' + i,
       name: 'child name is ' + i,
       deleteHref: '',
@@ -25,7 +25,7 @@ describe('카테고리 항목', () => {
         <CategoryList
           href=""
           name="root category"
-          childCateogries={child}
+          child={child}
           deleteHref={''}
           updateHref={''}
         />

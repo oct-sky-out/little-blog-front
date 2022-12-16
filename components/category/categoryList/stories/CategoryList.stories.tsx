@@ -19,7 +19,7 @@ export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   ...ChildCategoryStroy.Default[0],
-  childCateogries: ChildCategoryStroy.Default[0].child,
+  child: ChildCategoryStroy.Default[0].child,
 };
 
 export const Secondary = Template.bind({});

@@ -32,8 +32,7 @@ const CategoryChild = ({
 
   return (
     <React.Fragment>
-      <ListItemButton href={href} sx={{ px: deps }}>
-        <ListItemIcon></ListItemIcon>
+      <ListItemButton href={href} sx={{ pl: deps }}>
         <ListItemText primary={childName} />
       </ListItemButton>
       <div>{renderIsLoggedAdmin()}</div>
