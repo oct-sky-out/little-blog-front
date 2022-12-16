@@ -1,8 +1,15 @@
 import { CollectionModel, EntityModel } from 'hateoas-hal-types';
 import CategoryDomain from './CategoryDomain';
 
+type CategoryRelationEntityModel = {
+  _links: {
+    update: HalLink;
+    delete: HalLink;
+  };
+};
+
 interface CategoryContent {
-  category: EntityModel<CategoryDomain>;
+  category: EntityModel<CategoryDomain> & CategoryRelationEntityModel;
   children: CategoryContent[];
 }
 
