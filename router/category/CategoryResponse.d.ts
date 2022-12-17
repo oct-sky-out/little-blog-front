@@ -1,16 +1,18 @@
-import { CollectionModel, EntityModel } from 'hateoas-hal-types';
+import { HalResource, HalLink } from 'hal-types';
 import CategoryDomain from './CategoryDomain';
 
-type CategoryRelationEntityModel = {
-  _links: {
-    update: HalLink;
-    delete: HalLink;
+export type CategoryHal = {
+  category: CategoryDomain & {
+    _links: {
+      update: HalLink;
+      delete: HalLink;
+    };
   };
+  children: CategoryHal[];
 };
 
-interface CategoryContent {
-  category: EntityModel<CategoryDomain> & CategoryRelationEntityModel;
-  children: CategoryContent[];
-}
-
-export type CategoryCollection = CollectionModel<CategoryContent>;
+export type CategoryCollection = HalResource & {
+  _embedded: {
+    halCategoriesList: CategoryHal[];
+  };
+};

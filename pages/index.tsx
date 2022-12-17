@@ -1,16 +1,12 @@
 import CategoryComponent from '@/components/category/categoryComponent/CategoryComponent';
-import {
-  CategoryCollection,
-  CategoryContent,
-} from '@/router/category/CategoryResponse';
+import { CategoryCollection } from '@/router/category/CategoryResponse';
 import axios from '@/router/util/axios';
-import { EntityModel } from 'hateoas-hal-types';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import React from 'react';
 
 interface HomeProps {
-  categoryEntities: EntityModel<CategoryContent>[];
+  categoryEntities?: CategoryCollection;
 }
 
 export default function Home({ categoryEntities }: HomeProps) {
@@ -31,7 +27,7 @@ export default function Home({ categoryEntities }: HomeProps) {
 
 export const getServerSideProps: GetServerSideProps = async (_context) => {
   const result = await axios.get<CategoryCollection>('/api/categories');
-  const categoryEntities = result.data._embedded['halCategoriesList'];
+  const categoryEntities = result.data;
 
   return { props: { categoryEntities } };
 };

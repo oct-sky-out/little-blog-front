@@ -1,21 +1,36 @@
-import { CategoryContent } from '@/router/category/CategoryResponse';
-import { EntityModel } from 'hateoas-hal-types';
+import {
+  CategoryCollection,
+  CategoryHal,
+} from '@/router/category/CategoryResponse';
 import React from 'react';
 import { v4 } from 'uuid';
 import CategoryList, { CategoryListProps } from '../categoryList/CategoryList';
 import CategoryWrapper from '../categoryWrapper/CategoryWrapper';
 
 interface CategoryComponentProps {
-  categoryEntities: EntityModel<CategoryContent>[];
+  categoryEntities?: CategoryCollection;
 }
 
 const categoryComponent = ({ categoryEntities }: CategoryComponentProps) => {
-  const categoryEntitiesToCategoryListProps = () =>
-    categoryEntities.map((entity) => parseCategoryListProps(entity));
+  const categoryEntitiesToCategoryListProps = () => {
+    if (categoryEntities === undefined) {
+      return [
+        {
+          href: '',
+          name: '카테고리가 비어있습니다.',
+          updateHref: '',
+          deleteHref: '',
+        },
+      ];
+    }
+    return categoryEntities._embedded.halCategoriesList.map((category) =>
+      parseCategoryListProps(category)
+    );
+  };
 
   const parseCategoryListProps: (
-    categoryEntity: CategoryContent
-  ) => CategoryListProps = (categoryEntity: CategoryContent) => {
+    categoryEntity: CategoryHal
+  ) => CategoryListProps = (categoryEntity: CategoryHal) => {
     const { name, _links } = categoryEntity.category;
     const categoryProp: CategoryListProps = {
       href: '',
