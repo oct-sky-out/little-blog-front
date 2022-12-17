@@ -8,12 +8,12 @@ import CategoryList, { CategoryListProps } from '../categoryList/CategoryList';
 import CategoryWrapper from '../categoryWrapper/CategoryWrapper';
 
 interface CategoryComponentProps {
-  categoryEntities?: CategoryCollection;
+  categoryEntities: CategoryCollection;
 }
 
 const categoryComponent = ({ categoryEntities }: CategoryComponentProps) => {
   const categoryEntitiesToCategoryListProps = () => {
-    if (categoryEntities === undefined) {
+    if (categoryEntities._embedded === undefined) {
       return [
         {
           href: '',
@@ -23,7 +23,8 @@ const categoryComponent = ({ categoryEntities }: CategoryComponentProps) => {
         },
       ];
     }
-    return categoryEntities._embedded.halCategoriesList.map((category) =>
+
+    return categoryEntities._embedded!.halCategoriesList.map((category) =>
       parseCategoryListProps(category)
     );
   };

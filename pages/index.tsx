@@ -6,7 +6,7 @@ import Head from 'next/head';
 import React from 'react';
 
 interface HomeProps {
-  categoryEntities?: CategoryCollection;
+  categoryEntities: CategoryCollection;
 }
 
 export default function Home({ categoryEntities }: HomeProps) {
@@ -28,6 +28,6 @@ export default function Home({ categoryEntities }: HomeProps) {
 export const getServerSideProps: GetServerSideProps = async (_context) => {
   const result = await axios.get<CategoryCollection>('/api/categories');
   const categoryEntities = result.data;
-
+  console.log(categoryEntities);
   return { props: { categoryEntities } };
 };

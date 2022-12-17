@@ -12,7 +12,7 @@ export type CategoryHal = {
 };
 
 export type CategoryCollection = HalResource & {
-  _embedded: {
+  _embedded?: {
     halCategoriesList: CategoryHal[];
   };
 };
