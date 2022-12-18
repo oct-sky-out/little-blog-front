@@ -1,12 +1,12 @@
-import { childCategoryType } from '../CategoryList';
+import { CategoryListProps } from '../CategoryList';
 
-const grandChild: childCategoryType[] = Array(1, 2).map((_) => ({
+const grandChild: CategoryListProps[] = Array(1, 2).map((_) => ({
   href: '#',
   name: 'Grand Child',
   deleteHref: '',
   updateHref: '',
 }));
-const child: childCategoryType[] = [
+const child: CategoryListProps[] = [
   {
     href: '#',
     name: 'Child',
@@ -15,7 +15,7 @@ const child: childCategoryType[] = [
     child: grandChild,
   },
 ];
-const root: childCategoryType[] = Array(1)
+const root: CategoryListProps[] = Array(1)
   .fill(1)
   .map((i) => ({
     href: '#',
@@ -25,7 +25,7 @@ const root: childCategoryType[] = Array(1)
     child: child,
   }));
 
-const ChildCategoryStroy: { Default: childCategoryType[] } = {
+const ChildCategoryStroy: { Default: CategoryListProps[] } = {
   Default: [
     ...root,
     {

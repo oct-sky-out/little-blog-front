@@ -1,6 +1,7 @@
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import {
   Collapse,
+  List,
   ListItem,
   ListItemButton,
   ListItemText,
@@ -10,16 +11,8 @@ import { v4 } from 'uuid';
 import { useIsAdminSWR } from '../../hook/useIsAdminSWR';
 import CategoryChild from '../categoryChild/CategoryChild';
 
-export type childCategoryType = {
-  child?: childCategoryType[];
-  href: string;
-  name: string;
-  updateHref: string;
-  deleteHref: string;
-};
-
-interface CategoryListProps {
-  childCateogries?: childCategoryType[];
+export interface CategoryListProps {
+  child?: CategoryListProps[];
   deps?: number;
   href: string;
   name: string;
@@ -27,12 +20,7 @@ interface CategoryListProps {
   deleteHref: string;
 }
 
-const CategoryList = ({
-  childCateogries,
-  deps = 0,
-  href,
-  name,
-}: CategoryListProps) => {
+const CategoryList = ({ child, deps = 1, href, name }: CategoryListProps) => {
   const [childCategoryOpen, setChildCategoryOpen] = useState(false);
   const menuOpenClose = (state: boolean) => setChildCategoryOpen(state);
 
@@ -50,50 +38,52 @@ const CategoryList = ({
   };
 
   const hasChildren = () => {
-    if (childCateogries) {
+    if (child) {
       return childCategoryOpen ? <ExpandLess /> : <ExpandMore />;
     }
   };
 
   const childRender = useMemo(() => {
-    if (!childCateogries) {
+    if (!child) {
       return '';
     }
 
     return (
       <Collapse in={childCategoryOpen} timeout="auto" unmountOnExit>
-        {childCateogries.map((category) => {
-          const { child, href, name, updateHref, deleteHref } = category;
-          if (!child) {
-            return (
-              <CategoryChild
-                deps={deps! + 1}
-                href={href}
-                childName={name}
-                key={v4()}
-                updateHref={updateHref}
-                deleteHref={deleteHref}
-              />
-            );
-          }
+        <List component="div" disablePadding>
+          {child.map((category) => {
+            const { child, href, name, updateHref, deleteHref } = category;
+            if (!child) {
+              return (
+                <CategoryChild
+                  deps={deps! + 2}
+                  href={href}
+                  childName={name}
+                  key={v4()}
+                  updateHref={updateHref}
+                  deleteHref={deleteHref}
+                />
+              );
+            }
 
-          if (child) {
-            return (
-              <CategoryList
-                key={v4()}
-                childCateogries={child}
-                href={href}
-                deps={deps! + 1}
-                name={name}
-                updateHref={updateHref}
-                deleteHref={deleteHref}
-              ></CategoryList>
-            );
-          }
-        })}
+            if (child) {
+              return (
+                <CategoryList
+                  key={v4()}
+                  child={child}
+                  href={href}
+                  deps={deps! + 2}
+                  name={name}
+                  updateHref={updateHref}
+                  deleteHref={deleteHref}
+                ></CategoryList>
+              );
+            }
+          })}
+        </List>
       </Collapse>
     );
-  }, [childCateogries, childCategoryOpen]);
+  }, [child, childCategoryOpen]);
 
   return (
     <React.Fragment>
@@ -102,10 +92,10 @@ const CategoryList = ({
         onClick={() => menuOpenClose(!childCategoryOpen)}
         data-testid="category-btn"
       >
-        <ListItemButton href={href} sx={{ px: deps }}>
+        <ListItemButton href={href} sx={{ pl: deps }}>
           <ListItemText primary={name} />
+          {hasChildren()}
         </ListItemButton>
-        {hasChildren()}
       </ListItem>
       {renderIsLoggedAdmin()}
       {childRender}
