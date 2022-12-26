@@ -10,8 +10,9 @@ module.exports = {
       colors: {
         'dark-bg': '#232425',
         'dark-bg-light': '#292b2b',
-      },
+      }
     },
+
   },
   plugins: [],
 }
