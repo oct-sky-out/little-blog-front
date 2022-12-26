@@ -2,8 +2,8 @@ import { CategoryCollection } from '@/router/category/CategoryResponse';
 import React from 'react';
 import CategoryComponent from './category/categoryComponent/CategoryComponent';
 
-type MenuLayoutProps = {
-  children: React.ReactNode;
+export type MenuLayoutProps = {
+  children?: React.ReactNode;
   categoryEntities: CategoryCollection;
 };
 
