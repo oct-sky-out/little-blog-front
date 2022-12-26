@@ -8,11 +8,13 @@ export type CategoryHal = {
       delete: HalLink;
     };
   };
-  children: CategoryHal[];
+  children: CategoryHal[] | null;
 };
 
-export type CategoryCollection = HalResource & {
-  _embedded?: {
-    halCategoriesList: CategoryHal[];
-  };
-};
+export type CategoryCollection =
+  | HalResource
+  | {
+      _embedded?: {
+        halCategoriesList: CategoryHal[];
+      };
+    };

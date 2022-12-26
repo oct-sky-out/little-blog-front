@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import React, { useMemo, useState } from 'react';
 import { v4 } from 'uuid';
-import { useIsAdminSWR } from '../../hook/useIsAdminSWR';
+import { useIsAdminSWR } from '../../../hook/useIsAdminSWR';
 import CategoryChild from '../categoryChild/CategoryChild';
 
 export interface CategoryListProps {

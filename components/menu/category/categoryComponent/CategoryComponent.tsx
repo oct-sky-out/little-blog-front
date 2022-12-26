@@ -14,7 +14,7 @@ interface CategoryComponentProps {
 const categoryComponent = ({ categoryEntities }: CategoryComponentProps) => {
   const categoryEntitiesToCategoryListProps = () => {
     if (categoryEntities._embedded === undefined) {
-      return [
+      const defaultMenu = [
         {
           href: '',
           name: '카테고리가 비어있습니다.',
@@ -22,10 +22,12 @@ const categoryComponent = ({ categoryEntities }: CategoryComponentProps) => {
           deleteHref: '',
         },
       ];
+
+      return defaultMenu;
     }
 
-    return categoryEntities._embedded!.halCategoriesList.map((category) =>
-      parseCategoryListProps(category)
+    return categoryEntities._embedded!.halCategoriesList.map(
+      (category: CategoryHal) => parseCategoryListProps(category)
     );
   };
 
