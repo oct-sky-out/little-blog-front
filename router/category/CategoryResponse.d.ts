@@ -11,8 +11,10 @@ export type CategoryHal = {
   children: CategoryHal[] | null;
 };
 
-export type CategoryCollection = HalResource & {
-  _embedded?: {
-    halCategoriesList: CategoryHal[];
-  };
-};
+export type CategoryCollection =
+  | HalResource
+  | {
+      _embedded?: {
+        halCategoriesList: CategoryHal[];
+      };
+    };

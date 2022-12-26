@@ -26,8 +26,8 @@ const categoryComponent = ({ categoryEntities }: CategoryComponentProps) => {
       return defaultMenu;
     }
 
-    return categoryEntities._embedded!.halCategoriesList.map((category) =>
-      parseCategoryListProps(category)
+    return categoryEntities._embedded!.halCategoriesList.map(
+      (category: CategoryHal) => parseCategoryListProps(category)
     );
   };
 
