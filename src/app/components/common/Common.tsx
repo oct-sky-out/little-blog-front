@@ -4,12 +4,12 @@ import React from 'react';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
-import Gnb from '@/app/components/common/Gnb';
-import Footer from './Footer';
+import { Gnb } from '@/components/common/Gnb';
+import { Footer } from '@/components/common/Footer';
 
 type GnbAndLnbProps = { children: React.ReactNode };
 
-const CommonHofComponent: React.FC<GnbAndLnbProps> = ({ children }) => {
+const Common: React.FC<GnbAndLnbProps> = ({ children }) => {
 	return (
 		<Box
 			sx={{
@@ -20,7 +20,7 @@ const CommonHofComponent: React.FC<GnbAndLnbProps> = ({ children }) => {
 		>
 			<CssBaseline />
 			<Gnb />
-			<Container component='main' sx={{ mt: 8, mb: 2 }} maxWidth='sm'>
+			<Container component='main' sx={{ mt: 8, mb: 2 }}>
 				{children}
 			</Container>
 			<Footer />
@@ -28,4 +28,4 @@ const CommonHofComponent: React.FC<GnbAndLnbProps> = ({ children }) => {
 	);
 };
 
-export default CommonHofComponent;
+export default Common;

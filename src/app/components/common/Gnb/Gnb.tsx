@@ -1,7 +1,6 @@
 'use client';
 
 import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Toolbar from '@mui/material/Toolbar';
 import Link from '@mui/material/Link';
@@ -16,8 +15,14 @@ const Gnb = () => {
 			sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
 		>
 			<Toolbar sx={{ flexWrap: 'wrap' }}>
-				<Typography variant='h6' color='inherit' noWrap sx={{ flexGrow: 1 }}>
-					Company name
+				<Typography
+					variant='h6'
+					color='inherit'
+					noWrap
+					sx={{ flexGrow: 1 }}
+					data-testid='companyLogo'
+				>
+					BS Auto
 				</Typography>
 				<nav>
 					<Link
@@ -25,29 +30,20 @@ const Gnb = () => {
 						color='text.primary'
 						href='#'
 						sx={{ my: 1, mx: 1.5 }}
+						data-testid='company-introduce'
 					>
-						Features
+						회사소개
 					</Link>
 					<Link
 						variant='button'
 						color='text.primary'
 						href='#'
 						sx={{ my: 1, mx: 1.5 }}
+						data-testid='inquiry'
 					>
-						Enterprise
-					</Link>
-					<Link
-						variant='button'
-						color='text.primary'
-						href='#'
-						sx={{ my: 1, mx: 1.5 }}
-					>
-						Support
+						문의
 					</Link>
 				</nav>
-				<Button href='#' variant='outlined' sx={{ my: 1, mx: 1.5 }}>
-					Login
-				</Button>
 			</Toolbar>
 		</AppBar>
 	);

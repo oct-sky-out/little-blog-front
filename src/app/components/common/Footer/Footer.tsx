@@ -7,10 +7,10 @@ import Link from '@mui/material/Link';
 
 function Copyright() {
 	return (
-		<Typography variant='body2' color='text.secondary'>
+		<Typography variant='body2' color='text.secondary' data-testid='copyright'>
 			{'Copyright © '}
 			<Link color='inherit' href='https://mui.com/'>
-				Your Website
+				BS Auto
 			</Link>{' '}
 			{new Date().getFullYear()}
 			{'.'}
@@ -33,9 +33,7 @@ const Footer = () => {
 			}}
 		>
 			<Container maxWidth='sm'>
-				<Typography variant='body1'>
-					My sticky footer can be found here.
-				</Typography>
+				<Typography variant='body1' />
 				<Copyright />
 			</Container>
 		</Box>
